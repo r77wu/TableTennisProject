@@ -1,0 +1,80 @@
+.container{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.leftbox{
+  width: 30%;
+}
+
+.rightbox{
+  width: 30%;
+}
+
+.form {
+  margin: auto;
+  margin: 10px auto;
+  padding: 10px;
+}
+
+h1 {
+  text-align: center;
+}
+
+button {
+  width: 100%;
+  height: 40px;
+  text-align: center;
+  display: block;
+  border-radius: 5px;
+  border: 2px solid #E98074;
+  color: #E98074;
+  background-color: white;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  cursor: pointer;
+  color: #E85A4F;
+}
+
+.Button {
+  width: 100%;
+  line-height: 35px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  border-radius: 5px;
+  border: 2px solid #E98074;
+  color: #E98074;
+  background-color: white;
+  transition: all 0.3s ease;
+}
+
+.Button:hover {
+  cursor: pointer;
+  color: #E85A4F;
+}
+
+.forgotPassword {
+  text-align: left;
+}
+
+.promo {
+  display: flex;
+  justify-content: space-between;
+  margin: 50px auto;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  display: block;
+  margin: auto;
+}
+
+.promotext {
+  text-align: center;
+}
+
+
