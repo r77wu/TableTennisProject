@@ -1,16 +1,25 @@
 import React, {useState} from 'react';
-import {NavLink} from 'react-router-dom';
-import axios from 'axios';
+import {NavLink, Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
 import classes from './Signup.module.css';
 import Input from '../InputForm/InputFrom';
+import Spinner from '../../UI/Spinner';
+import * as actions from '../../store/actions/index';
 
 const SignUp = (props) => {
   const initalUserState = {
-    name: {
+    firstName: {
       value: '',
       elementConfig: {
         type: 'text',
-        placeholder: 'Please enter your name'
+        placeholder: 'Please enter your first name'
+      }
+    },
+    lastName: {
+      value: '',
+      elementConfig: {
+        type: 'text',
+        placeholder: 'Please enter your last name'
       }
     },
     email: {
@@ -55,11 +64,7 @@ const SignUp = (props) => {
       submitForm[key] = userState[key].value;
     };
     
-    axios.post('/api/v1/users/signup', submitForm).then(response => {
-      console.log(response);
-    }).catch((error) => {
-      console.log(error);
-    });
+    props.onSignup(submitForm);
   }
 
   let userElements = [];
@@ -82,14 +87,46 @@ const SignUp = (props) => {
       <p>Already have an account? <NavLink to='/login'>log in</NavLink></p>
     </form>
   ) 
+
+  if(props.loading) {
+    signUpForm = <Spinner/>
+  }
+
+
+  let errmessage = null;
+
+  if(props.error) {
+    errmessage = <p>{props.error}</p>
+  }
+
+  let authRedirect = null;
+  if (props.isAuth) {
+    authRedirect = <Redirect to={props.authRedirectPath} />;
+  }
   
   return (
     <div>
       {signUpForm}
-      
+      {errmessage}
+      {authRedirect}
     </div>
     
   );
 }
 
-export default SignUp;
+const mapStateToProps = state => {
+  return {
+    isAuth: state.auth.user._id !== null,
+    loading: state.auth.loading,
+    error: state.auth.error,
+    authRedirectPath: state.auth.authRedirectPath
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onSignup: (submitForm) => {dispatch(actions.signup(submitForm))}
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

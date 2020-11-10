@@ -51,6 +51,12 @@ const Login = (props) => {
     })
   }
 
+  let errmessage = null;
+
+  if(props.error) {
+    errmessage = (<p>{props.error}</p>)
+  }
+
   let loginForm = (
     <div className={classes.leftbox}>
       <form className={classes.form} onSubmit={sumbitFormHandler}>
@@ -60,6 +66,7 @@ const Login = (props) => {
         })}
         <p className={classes.forgotPassword}>Forgot password?</p>
         <button>SIGN IN</button>
+        {errmessage}
       </form>
     </div>
   )
@@ -93,10 +100,7 @@ const Login = (props) => {
     newUserForm = null
   }
 
-
-  if(props.error) {
-    window.alert(props.error);
-  }
+  
 
   let authRedirect = null;
   if (props.isAuth) {
@@ -117,7 +121,7 @@ const mapStateToProps = state => {
     isAuth: state.auth.user._id !== null,
     loading: state.auth.loading,
     error: state.auth.error,
-    authRedirectPath: state.auth.authRedirectPath,
+    authRedirectPath: state.auth.authRedirectPath
   }
 }
 

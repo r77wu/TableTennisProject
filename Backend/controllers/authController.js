@@ -29,7 +29,8 @@ const createSendToken = (user, statusCode, res) =>{
 exports.signup = async (req, res, next) => {
   try {
     const newUser = await User.create({
-      name: req.body.name,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
       email: req.body.email,
       password: req.body.password,
       passwordConfirm: req.body.passwordConfirm
@@ -79,8 +80,8 @@ exports.protect = async (req, res, next) => {
   let token;
   if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
       token = req.headers.authorization.split(' ')[1];
-  } else if (req.cookie.jwt) {
-    token = req.cookie.jwt;
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
   }
   if(!token) {
     return next(new Error('please login again!'));
@@ -93,10 +94,11 @@ exports.protect = async (req, res, next) => {
     return next(new Error('User does not exist!'));
   }
 
-  if(freshUser.changePasswordAfter(decoded.iat)){
+  if(freshUser.changedPasswordAfter(decoded.iat)){
     return next(new Error('Please login again!'));
   };
   req.user = freshUser;
+  console.log(req.user);
   next();
 }
 
@@ -112,22 +114,70 @@ exports.isLoggedIn = async (req, res, next) => {
       // 2) Check if user still exists
       const currentUser = await User.findById(decoded.id);
       if (!currentUser) {
-        return next();
+        return next(new Error('Please log in again'));
       }
 
       // 3) Check if user changed password after the token was issued
       if (currentUser.changedPasswordAfter(decoded.iat)) {
-        return next();
+        return next(new Error('Please log in again'));
       }
 
       // THERE IS A LOGGED IN USER
       res.locals.user = currentUser;
-      return next();
+      res.status(200).json({
+        status: 'success'
+      })
     } catch (err) {
-      return next();
+      res.status(400).json({
+        status: 'fail'
+      })
     }
+  } else {
+    res.status(400).json({
+      status: 'fail'
+    })
   }
-  next();
+};
+
+exports.isAuth = async (req, res, next) => {
+  try {
+    let token;
+    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+        token = req.headers.authorization.split(' ')[1];
+    } else if (req.cookies.jwt) {
+      token = req.cookies.jwt;
+    }
+    if(!token) {
+      return res.status(200).json({
+        status: 'fail'
+      });
+    }
+    
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+
+    const freshUser = await User.findById(decoded.id);
+    if(!freshUser) {
+      return res.status(200).json({
+        status: 'fail'
+      });
+    }
+
+    if(freshUser.changedPasswordAfter(decoded.iat)){
+      return res.status(200).json({
+        status: 'fail'
+      });
+    };
+
+    res.status(200).json({
+      status: 'seccuss',
+      user: freshUser
+    });
+  } catch(err) {
+    res.status(400).json({
+      status: 'fail',
+      err
+    });
+  }
 };
 
 exports.restrictTo = (...roles) => {
@@ -200,9 +250,12 @@ exports.resetPassword = async (req, res, next) => {
 
 exports.updatePassword = async (req, res, next) => {
   try {
-    const user = await User.findOne(req.user._id).select('+password');
+    const user = await User.findById(req.user.id).select('+password');
     if(!user) {
       return next(new Error('please login again!'));
+    }
+    if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
+      return next(new Error('Your current password is wrong.'));
     }
     user.password = req.body.password;
     user.passwordConfirm = req.body.passwordConfirm;

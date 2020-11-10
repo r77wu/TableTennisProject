@@ -4,10 +4,12 @@ import updateObject from '../../utilities/utility';
 const initalState = {
   user: {
     _id: null,
-    name: null,
+    firstName: null,
+    lastName: null,
     email: null,
     age: null,
     country: null,
+    city: null,
     style: null,
     role: null
   },

@@ -1,21 +1,30 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import {connect} from 'react-redux';
 import SignupForm from '../Signup/Signup';
 import LoginForm from '../Login/Login';
 import MyAccount from '../MyAccount/MyAccount';
+import MainPage from '../MainPage/MainPage';
+
 
 const body = (props) => {
   return (
-    <section>
+    <div>
       <Switch>
-        <Route path='/' exact render={() => <div>I am main page</div> }/>
+        <Route path='/' exact component={MainPage}/>
         <Route path='/signup' exact component={SignupForm}/>
         <Route path='/login' exact component={LoginForm}/>
-        <Route path='/myaccount' exact component={MyAccount}/>
+        <Route path='/myaccount' component={MyAccount}/>
       </Switch>
       
-    </section>
+    </div>
   )
 }
 
-export default body;
+const mapStateToProps = state => {
+  return {
+    isLogged: state.auth.user._id !== null
+  }
+}
+
+export default connect(mapStateToProps)(body);

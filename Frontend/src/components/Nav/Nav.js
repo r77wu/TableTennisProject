@@ -4,7 +4,7 @@ import {NavLink} from 'react-router-dom';
 import * as actions from '../../store/actions/index';
 import classes from './Nav.module.css'; 
 
-const nav = (props) => {
+const Nav = (props) => {
   const logoutHandler = (event) => {
     event.preventDefault();
     props.onLogout();
@@ -27,7 +27,7 @@ const nav = (props) => {
     <nav>
       <ul>
         <li>
-          <NavLink to='/myaccount'>My Account</NavLink>
+          <NavLink to='/myaccount/profile'>My Account</NavLink>
         </li>
         <li>
           <a onClick={logoutHandler}>Log out</a>
@@ -36,17 +36,16 @@ const nav = (props) => {
     </nav>
   )
 
-
   return (
     <div>
-      {props.isAuth ? authNav : unAuthNav}
+      {props.isLogged ? authNav : unAuthNav}
     </div>
   )
 }
 
 const mapStateToProps = state => {
   return {
-    isAuth: state.auth.user._id !== null
+    isLogged: state.auth.user._id !== null
   }
 }
 
@@ -59,4 +58,4 @@ const mapDispatchToProps = dispatch => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(nav);
+export default connect(mapStateToProps, mapDispatchToProps)(Nav);

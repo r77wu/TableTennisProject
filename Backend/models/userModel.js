@@ -3,9 +3,14 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 
 const userSchema = new mongoose.Schema({
-  name: {
+  firstName: {
     type: String,
-    required: [true, 'please provide your name'],
+    required: [true, 'please provide your first name'],
+    trim: true
+  },
+  lastName: {
+    type: String,
+    required: [true, 'please provide your last name'],
     trim: true
   },
   email: {
@@ -36,9 +41,12 @@ const userSchema = new mongoose.Schema({
   country: {
     type: String
   },
+  city: {
+    type: String
+  },
   style: {
     type: String,
-    enum: ['Penholer', 'Shake']
+    enum: ['Penhold', 'Shakehand']
   },
   role: {
     type: String,

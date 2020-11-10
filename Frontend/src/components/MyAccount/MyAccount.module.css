@@ -1,0 +1,32 @@
+.myAccount {
+  display: flex;
+}
+
+.sidebar {
+  display: block;
+  width: 20%;
+}
+
+
+
+.sidebar li {
+  display: block;
+  box-sizing: border-box;
+  color: #8E8D8A;
+  font-size: large;
+  text-decoration: none;
+  width: 100%;
+  padding-left: 65px;
+  padding-top: 10px;
+  line-height: 55px;
+  transition: 0.5s;
+}
+
+.sidebar li:hover {
+  cursor: pointer;
+  color: #E98074;
+}
+
+.icon {
+  padding-right: 10px;
+}

@@ -1,5 +1,8 @@
 export {
   auth,
   setRedirectPath,
-  logout
+  logout,
+  signup,
+  getMe,
+  isAuth
 } from './auth';

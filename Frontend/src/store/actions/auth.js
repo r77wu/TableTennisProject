@@ -21,6 +21,16 @@ export const authFail = (error) => {
   }
 }
 
+export const isAuth = () => {
+  return dispatch => {
+    axios.get('/api/v1/users/isAuth').then(response => {
+      if(response.data.status === 'seccuss') {
+        dispatch(authSuccess(response.data.user));
+      }
+    })
+  }
+}
+
 export const auth = (email, password) => {
   return dispatch => {
     dispatch(authStart());
@@ -31,8 +41,22 @@ export const auth = (email, password) => {
     
     
     axios.post('/api/v1/users/login', submitForm).then(response => {
+      const {__v, ...newUser} = response.data.data.user;
+      dispatch(authSuccess(newUser));
+    }).catch((error) => {
+      console.log(error);
+      dispatch(authFail('Please try again!'))
+    }); 
+  }
+}
+
+export const signup = (newUser) => {
+  return dispatch => {
+    dispatch(authStart());
+    axios.post('/api/v1/users/signup', newUser).then(response => {
       console.log(response);
-      dispatch(authSuccess(response.data.data.user));
+      const {__v, ...newUser} = response.data.data.user;
+      dispatch(authSuccess(newUser));
     }).catch((error) => {
       console.log(error);
       dispatch(authFail('Please try again!'))
@@ -61,5 +85,18 @@ export const setRedirectPath = (path) => {
   return {
     type: actionTypes.SET_AUTH_REDIRECT_PATH,
     path
+  }
+}
+
+export const getMe = () => {
+  return dispatch => {
+    dispatch(authStart());
+    axios.get('/api/v1/users/getMe').then(response => {
+      console.log(response);
+      const {__v, ...newUser} = response.data.data;
+      dispatch(authSuccess(newUser));
+    }).catch(error => {
+      dispatch(authFail('Please try again!'))
+    });
   }
 }

@@ -1,0 +1,39 @@
+.title {
+  text-align: center;
+  display: block;
+  border-bottom: 2px solid #E98074;
+  width: 50%;
+  margin: auto;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+  margin: 10vh 0;
+  height: 30vh;
+}
+
+.review {
+  width: 40%;
+  text-align: center;
+  
+}
+
+.review blockquote {
+  font-size: larger;
+  font-weight: 650;
+  line-height: 145%;
+}
+
+
+.review cite{
+	font-size: 90%;
+	margin-top: 25px;
+	display: block;
+}
+
+cite img {
+	height: 50px;
+	border-radius: 50%;
+	margin-right: 15px;
+}

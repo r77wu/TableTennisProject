@@ -1,0 +1,31 @@
+.container {
+  background-image: linear-gradient(rgba(120, 120, 120, 0.7),rgba(120, 120, 120, 0.7)), url(../../../assets/images/recreational.jpg);
+	background-size: cover;
+	background-position: center;
+	height: 90vh;
+  background-attachment: fixed;
+}
+
+.container h1 {
+  color:black;
+  display: block;
+  padding: 25vh 20vh 0 20vh;
+}
+
+.container button {
+  display: block;
+  width: 100px;
+}
+
+.but {
+  display: block;
+  width: 120px;
+  border: 2px solid #E98074;
+  border-radius: 10px;
+  margin: auto;
+  text-align: center;
+  background-color: white;
+  font-size: large;
+  font-weight: 500;
+  cursor: pointer;
+}

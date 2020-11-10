@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  justify-content: space-around;
+  margin: 20vh 0;
+  height: 30vh;
+}
+
+.infobox {
+  display: block;
+  box-sizing: border-box;
+  width: 30%;
+  text-align: center;
+}
+
+.infobox p {
+  display: block;
+  box-sizing: border-box;
+  width: 70%;
+  text-align: center;
+  margin: 10px auto;
+}
+
+.icon {
+  padding-right: 10px;
+  width: 40px;
+  color: #E98074;
+}
