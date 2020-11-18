@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Switch, Link, Redirect} from 'react-router-dom';
+import {Route, Switch, Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {BsFillPersonFill, BsFillShieldFill} from 'react-icons/bs';
 import PersonalInfo from './PersonalInfo/PersonalInfo';

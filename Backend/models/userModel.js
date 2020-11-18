@@ -53,10 +53,29 @@ const userSchema = new mongoose.Schema({
     enum: ['user', 'admin'],
     default: 'user'
   },
+  friends: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }
+  ],
   passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date
-});
+},
+{
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+}
+);
+
+userSchema.index({city: 1});
+
+userSchema.virtual('list', {
+  ref: 'User',
+  localField: 'friends',
+  foreignField: '_id'
+})
 
 userSchema.pre('save', async function(next) {
   if(!this.isModified('password')) return next();

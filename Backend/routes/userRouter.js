@@ -16,4 +16,8 @@ router.use(authController.protect);
 router.get('/getMe', userController.getMe);
 router.patch('/changePassword',  authController.updatePassword);
 router.patch('/updateUser',  userController.updateMe);
+router.get('/search', userController.searchUser);
+router.patch('/addFriends', userController.addFriends);
+router.get('/friends', userController.getFriends);
+
 module.exports = router;

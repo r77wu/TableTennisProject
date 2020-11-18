@@ -24,7 +24,7 @@ const importData = async () =>{
       
       await User.create(users, {validateBeforeSave: false});
     
-      console.log('Date successfully loaded!');
+      console.log('Data successfully loaded!');
       process.exit();
   }catch(err){
       console.log(err);

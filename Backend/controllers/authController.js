@@ -98,7 +98,7 @@ exports.protect = async (req, res, next) => {
     return next(new Error('Please login again!'));
   };
   req.user = freshUser;
-  console.log(req.user);
+  
   next();
 }
 

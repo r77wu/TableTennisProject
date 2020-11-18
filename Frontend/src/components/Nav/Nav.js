@@ -27,10 +27,13 @@ const Nav = (props) => {
     <nav>
       <ul>
         <li>
+          <NavLink to='/friends'>Friends</NavLink>
+        </li>
+        <li>
           <NavLink to='/myaccount/profile'>My Account</NavLink>
         </li>
         <li>
-          <a onClick={logoutHandler}>Log out</a>
+          <a href='#' onClick={logoutHandler}>Log out</a>
         </li>
       </ul>
     </nav>

@@ -1,0 +1,32 @@
+.title {
+  display: block;
+  width: 100%;
+  text-align: center;
+  height: 8rem;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.friendsList {
+  display: block;
+  width: 30%;
+}
+
+.searchFriends {
+  display: block;
+  width: 60%;
+}
+
+.form {
+  display: block;
+  width: 40rem;
+  margin: 1em auto;
+}
+
+button {
+  display: block;
+  width: 10em;
+}
